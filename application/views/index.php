@@ -86,7 +86,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
 
             <div class="row clearfix text-center">
-                <button class="btn btn-lg btn-primary"><i class="fa fa-save"></i> Save</button>
+                <button class="btn btn-lg btn-primary" id="save"><i class="fa fa-save"></i> Save</button>
             </div>
         </div>
 
@@ -184,6 +184,45 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     expiredCtx.drawImage(video,145,365,300,20,1,1,300,20); //EXPIRED KTP
                 }
             });
+
+            document.getElementById("save").addEventListener("click", function() {
+                var data = {};
+                var card_type = $("input[name='card']:checked").val();
+                console.log(card_type);
+                if (card_type == 'SIM'){
+                    data = {
+                        type : card_type,
+                        full_image : full.toDataURL("image/jpg"),
+                        number_image : number.toDataURL("image/jpg"),
+                        name_image : holder.toDataURL("image/jpg"),
+                        photo_image : photo.toDataURL("image/jpg"),
+                        address1_image : address1.toDataURL("image/jpg"),
+                        address2_image : address2.toDataURL("image/jpg"),
+                        address3_image : address3.toDataURL("image/jpg"),
+                        expired_image : expired.toDataURL("image/jpg"),
+                    }
+                }else if (card_type == 'KTP'){
+                    data = {
+                        type : card_type,
+                        full_image : full.toDataURL("image/jpg"),
+                        number_image : number.toDataURL("image/jpg"),
+                        name_image : holder.toDataURL("image/jpg"),
+                        photo_image : photo.toDataURL("image/jpg"),
+                        address1_image : address1.toDataURL("image/jpg"),
+                        address2_image : address2.toDataURL("image/jpg"),
+                        address3_image : address3.toDataURL("image/jpg"),
+                        address4_image : address4.toDataURL("image/jpg"),
+                        expired_image : expired.toDataURL("image/jpg"),
+                    }
+                }
+                $.post("<?php echo site_url('/store'); ?>",
+                    data, function(response) {
+                        if(response == 'ok'){
+                            alert("data berhasil disimpan");
+                            window.location.reload();
+                        }
+                    });
+            })
         </script>
 
         <style>
